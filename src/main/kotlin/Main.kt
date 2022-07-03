@@ -1,6 +1,7 @@
 val letters = arrayOf('A', 'B', 'C')
 val playedMoves = mutableListOf<String>()
 val boardArray = arrayOf(charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '))
+
 fun main() {
     var isPLaying = true
 
@@ -140,15 +141,15 @@ fun validateUserMove(move: String?): Boolean {
         println("\nInvalid move, try again")
         return false
     }
-    else if(!letters.contains(move?.get(0)?.uppercaseChar())){
+    else if(!letters.contains(move[0].uppercaseChar())){
         println("\nInvalid letter")
         return false
     }
-    else if(!(move?.get(1)?.isDigit())!! || move?.get(1)?.digitToInt()!! < 1 || move?.get(1)?.digitToInt()!! > 3){
+    else if(!(move[1].isDigit()) || move[1].digitToInt() < 1 || move[1].digitToInt() > 3){
         println("\nInvalid number")
         return false
     }
-    else if(playedMoves?.contains(move)){
+    else if(playedMoves.contains(move)){
         println("\nMove already played")
         return false
     }
