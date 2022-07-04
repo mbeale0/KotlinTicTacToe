@@ -73,11 +73,11 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         val size = boardSpots.size - 1
         return when {
             boardSpots.indices.all { boardSpots[it][size - it] == 'X' } -> {
-                println("X won!!!")
+                println("X won!")
                 true
             }
             boardSpots.indices.all { boardSpots[it][size - it] == '0' } -> {
-                println("0 won!!!")
+                println("0 won!")
                 true
             }
             else -> false
@@ -87,11 +87,11 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
     private fun checkDiagonalDown(): Boolean {
         return when {
             boardSpots.indices.all { boardSpots[it][it] == 'X' } -> {
-                println("X won!!!")
+                println("X won!")
                 true
             }
             boardSpots.indices.all { boardSpots[it][it] == '0' } -> {
-                println("0 won!!!")
+                println("0 won!")
                 true
             }
             else -> false
