@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class BoardTest {
 
@@ -44,5 +45,14 @@ class BoardTest {
     fun diagonalDownVictory(){
         val board = Board(mapOf('X' to listOf("A3", "B2", "C1")))
         assertTrue(board.checkPlayerWon())
+    }
+
+    @Test
+    fun parseMove(){
+        val board = Board()
+
+        assertEquals(Pair(1, 1), board.parseMove("B2"))
+        assertEquals(Pair(0, 0), board.parseMove("A1"))
+        assertEquals(Pair(2, 1), board.parseMove("c2"))
     }
 }

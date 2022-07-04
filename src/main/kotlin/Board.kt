@@ -30,8 +30,8 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         return square == 'X' || square == '0'
     }
 
-    private fun parseMove(move: String): Pair<Int, Int> {
-        val row = move[0].code.minus(65)
+    fun parseMove(move: String): Pair<Int, Int> {
+        val row = move[0].uppercaseChar().code.minus(65)
         val col = move[1].digitToInt().minus(1)
         return Pair(row, col)
     }
