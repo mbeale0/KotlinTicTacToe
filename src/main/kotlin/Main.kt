@@ -29,7 +29,6 @@ private fun askForMove(board: Board): String? {
 private fun validateUserMove(move: String?, board: Board): Boolean {
     when {
         move?.length != 2 -> println("\nInvalid move, try again")
-        !letters.contains(move[0].uppercaseChar()) -> println("\nInvalid letter")
         !(move[1].isDigit()) || move[1].digitToInt() < 1 || move[1].digitToInt() > 3 -> println("\nInvalid number")
         board.isOccupied(move) -> println("\nMove already played")
         else -> return true
