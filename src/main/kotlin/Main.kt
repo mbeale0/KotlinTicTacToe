@@ -29,7 +29,7 @@ fun main() {
     }
 }
 
-fun checkPlayerWon(): Boolean {
+private fun checkPlayerWon(): Boolean {
     var xCount = 0
     var oCount = 0
 
@@ -74,10 +74,9 @@ fun checkPlayerWon(): Boolean {
 
     // check down diagonal
     for (i in 0..2) {
-        val j = i
-        if (boardArray[i][j] == 'X') {
+        if (boardArray[i][i] == 'X') {
             xCount++
-        } else if (boardArray[i][j] == 'O'){
+        } else if (boardArray[i][i] == 'O'){
             oCount++
         }
     }
@@ -110,6 +109,7 @@ fun checkPlayerWon(): Boolean {
     }
     return false
 }
+
 private fun addMove(userMove: String?, turn: Int) {
     if (userMove != null) {
         playedMoves.add(userMove)
@@ -136,27 +136,18 @@ private fun askForMove(): String? {
     return userMove
 }
 
-fun validateUserMove(move: String?): Boolean {
-    if(move?.length != 2){
-        println("\nInvalid move, try again")
-        return false
+private fun validateUserMove(move: String?): Boolean {
+    when {
+        move?.length != 2 -> println("\nInvalid move, try again")
+        !letters.contains(move[0].uppercaseChar()) -> println("\nInvalid letter")
+        !(move[1].isDigit()) || move[1].digitToInt() < 1 || move[1].digitToInt() > 3 -> println("\nInvalid number")
+        playedMoves.contains(move) -> println("\nMove already played")
+        else -> return true
     }
-    else if(!letters.contains(move[0].uppercaseChar())){
-        println("\nInvalid letter")
-        return false
-    }
-    else if(!(move[1].isDigit()) || move[1].digitToInt() < 1 || move[1].digitToInt() > 3){
-        println("\nInvalid number")
-        return false
-    }
-    else if(playedMoves.contains(move)){
-        println("\nMove already played")
-        return false
-    }
-    return true
+    return false
 }
 
-fun printGameBoard(){
+private fun printGameBoard(){
     println("  1   2   3")
     println("A ${boardArray[0][0]} | ${boardArray[0][1]} | ${boardArray[0][2]} ")
     println("  ---------")
