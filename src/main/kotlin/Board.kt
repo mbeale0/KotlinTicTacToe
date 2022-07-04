@@ -1,7 +1,17 @@
-class Board {
+class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
+    private var turn: Int = 0
     private val boardArray = arrayOf(charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '))
 
-    fun addMove(move: String, turn: Int) {
+    init {
+        initialPositions.forEach { (xOr0, placements) ->
+            placements.forEach { move ->
+                val (row, col) = parseMove(move)
+                boardArray[row][col] = xOr0
+            }
+        }
+    }
+
+    fun addMove(move: String) {
         val (row, col) = parseMove(move)
 
         if (isZerosTurn(turn)) {
@@ -9,7 +19,9 @@ class Board {
         } else {
             boardArray[row][col] = 'X'
         }
+        turn++
     }
+
     private fun isZerosTurn(turn: Int) = turn % 2 == 0
 
     fun isOccupied(move: String): Boolean {
@@ -18,13 +30,20 @@ class Board {
         return square == 'X' || square == '0'
     }
 
-    private fun parseMove(move: String): Pair<Int, Int>{
+    private fun parseMove(move: String): Pair<Int, Int> {
         val row = move[0].code.minus(65)
         val col = move[1].digitToInt().minus(1)
         return Pair(row, col)
     }
 
     fun checkPlayerWon(): Boolean {
+        return checkUpDiagonal()
+                || checkColumns()
+                || checkDownDiagonal()
+                || checkRows()
+    }
+
+    private fun checkUpDiagonal(): Boolean {
         var xCount = 0
         var oCount = 0
 
@@ -46,8 +65,13 @@ class Board {
             xCount = 0
             oCount = 0
         }
+        return false
+    }
 
-        // check columns
+
+    private fun checkColumns(): Boolean {
+        var xCount = 0
+        var oCount = 0
         for (i in 0..2) {
             for (j in 0..2) {
                 if (boardArray[j][i] == 'X') {
@@ -63,11 +87,13 @@ class Board {
                 println("O won!!")
                 return true
             }
-            xCount = 0
-            oCount = 0
         }
+        return false
+    }
 
-        // check down diagonal
+    private fun checkDownDiagonal(): Boolean {
+        var xCount = 0
+        var oCount = 0
         for (i in 0..2) {
             if (boardArray[i][i] == 'X') {
                 xCount++
@@ -82,8 +108,12 @@ class Board {
             println("O won!!!")
             return true
         }
-        xCount = 0
-        oCount = 0
+        return false
+    }
+
+    private fun checkRows(): Boolean {
+        var xCount = 0
+        var oCount = 0
         var j = 2
         for (i in 0..2) {
             if (boardArray[i][j] == 'X') {
