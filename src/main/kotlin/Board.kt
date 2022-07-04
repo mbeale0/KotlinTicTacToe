@@ -1,24 +1,27 @@
 class Board {
-    private val playedMoves = mutableListOf<String>()
     private val boardArray = arrayOf(charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '), charArrayOf(' ', ' ', ' '))
 
-    fun addMove(userMove: String, turn: Int) {
-        playedMoves.add(userMove)
-        val row = userMove[0].code.minus(65)
-        val col = userMove[1].digitToInt().minus(1)
+    fun addMove(move: String, turn: Int) {
+        val (row, col) = parseMove(move)
 
-        if (turn % 2 != 0) {
-            // X's turn
-            boardArray[row][col] = 'X'
-        } else {
-            // O's turn
+        if (isZerosTurn(turn)) {
             boardArray[row][col] = 'O'
+        } else {
+            boardArray[row][col] = 'X'
         }
     }
+    private fun isZerosTurn(turn: Int) = turn % 2 == 0
 
-    //This could be changed to grab by parsed move
     fun isOccupied(move: String): Boolean {
-        return playedMoves.contains(move)
+        val (row, col) = parseMove(move)
+        val square = boardArray[row][col]
+        return square == 'X' || square == '0'
+    }
+
+    private fun parseMove(move: String): Pair<Int, Int>{
+        val row = move[0].code.minus(65)
+        val col = move[1].digitToInt().minus(1)
+        return Pair(row, col)
     }
 
     fun checkPlayerWon(): Boolean {
@@ -102,12 +105,9 @@ class Board {
 
     fun print() {
         println("  1   2   3")
-
-        println("A ${boardArray[0][0]} | ${boardArray[0][1]} | ${boardArray[0][2]} ")
-        println("  ---------")
-        println("B ${boardArray[1][0]} | ${boardArray[1][1]} | ${boardArray[1][2]} ")
-        println("  ---------")
-        println("C ${boardArray[2][0]} | ${boardArray[2][1]} | ${boardArray[2][2]} ")
+        letters.forEachIndexed { i, letter ->
+            println("$letter " + boardArray[i].joinToString(" | ") { "$it" })
+        }
     }
 
 }
