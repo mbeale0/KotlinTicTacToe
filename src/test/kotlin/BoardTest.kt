@@ -12,6 +12,12 @@ class BoardTest {
     }
 
     @Test
+    fun notVictoryCombo(){
+        val board = Board(mapOf('X' to listOf("A1", "B2", "A3")))
+        assertFalse(board.checkPlayerWon())
+    }
+
+    @Test
     fun horizontalVictory(){
         val board = Board(mapOf('X' to listOf("A1", "A2", "A3")))
         assertTrue(board.checkPlayerWon())
