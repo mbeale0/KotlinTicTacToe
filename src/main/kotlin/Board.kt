@@ -74,11 +74,11 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         return when {
             boardSpots.indices.all { boardSpots[it][size - it] == 'X' } -> {
                 println("X won!!!")
-                return true
+                true
             }
             boardSpots.indices.all { boardSpots[it][size - it] == '0' } -> {
                 println("0 won!!!")
-                return true
+                true
             }
             else -> false
         }
@@ -88,11 +88,11 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         return when {
             boardSpots.indices.all { boardSpots[it][it] == 'X' } -> {
                 println("X won!!!")
-                return true
+                true
             }
             boardSpots.indices.all { boardSpots[it][it] == '0' } -> {
                 println("0 won!!!")
-                return true
+                true
             }
             else -> false
         }
