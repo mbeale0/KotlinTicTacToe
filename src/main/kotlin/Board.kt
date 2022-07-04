@@ -38,9 +38,34 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
 
     fun checkPlayerWon(): Boolean {
         return checkColumns()
-                || checkRows()
-                || checkUpDiagonal()
-                || checkDownDiagonal()
+                || checkHorizontal()
+                || checkDiagonalUp()
+                || checkDiagonalDown()
+    }
+
+    private fun checkHorizontal(): Boolean {
+        var xCount = 0
+        var oCount = 0
+
+        for (row in 0..2) {
+            for (col in 0..2) {
+                if (boardArray[row][col] == 'X') {
+                    xCount++
+                } else if (boardArray[row][col] == 'O') {
+                    oCount++
+                }
+            }
+            if (xCount == 3) {
+                println("X won!")
+                return true
+            } else if (oCount == 3) {
+                println("O won!")
+                return true
+            }
+            xCount = 0
+            oCount = 0
+        }
+        return false
     }
 
     private fun checkColumns(): Boolean {
@@ -67,17 +92,17 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         return false
     }
 
-    private fun checkRows(): Boolean {
+    private fun checkDiagonalUp(): Boolean {
         var xCount = 0
         var oCount = 0
-        var j = 2
-        for (i in 0..2) {
-            if (boardArray[i][j] == 'X') {
+        var col = 2
+        for (row in 0..2) {
+            if (boardArray[row][col] == 'X') {
                 xCount++
-            } else if (boardArray[i][j] == 'O') {
+            } else if (boardArray[row][col] == 'O') {
                 oCount++
             }
-            j--
+            col--
         }
         if (xCount == 3) {
             println("X won!!!!")
@@ -89,7 +114,7 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         return false
     }
 
-    private fun checkDownDiagonal(): Boolean {
+    private fun checkDiagonalDown(): Boolean {
         var xCount = 0
         var oCount = 0
         for (i in 0..2) {
@@ -105,31 +130,6 @@ class Board(initialPositions: Map<Char, List<String>> = mapOf()) {
         } else if (oCount == 3) {
             println("O won!!!")
             return true
-        }
-        return false
-    }
-
-    private fun checkUpDiagonal(): Boolean {
-        var xCount = 0
-        var oCount = 0
-
-        for (i in 0..2) {
-            for (j in 0..2) {
-                if (boardArray[i][j] == 'X') {
-                    xCount++
-                } else if (boardArray[i][j] == 'O') {
-                    oCount++
-                }
-            }
-            if (xCount == 3) {
-                println("X won!")
-                return true
-            } else if (oCount == 3) {
-                println("O won!")
-                return true
-            }
-            xCount = 0
-            oCount = 0
         }
         return false
     }

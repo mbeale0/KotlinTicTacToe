@@ -42,13 +42,13 @@ class BoardTest {
     }
 
     @Test
-    fun diagonalVictory(){
+    fun diagonalDownVictory(){
         val board = Board(mapOf('X' to listOf("A1", "B2", "C3")))
         assertTrue(board.checkPlayerWon())
     }
 
     @Test
-    fun diagonalDownVictory(){
+    fun diagonalUpVictory(){
         val board = Board(mapOf('X' to listOf("A3", "B2", "C1")))
         assertTrue(board.checkPlayerWon())
     }
